@@ -15,7 +15,7 @@ class Solution {
         int ans=0;
         for(int i=0; i<n; i++)
         {
-            System.out.println(memo[i]);
+           // System.out.println(memo[i]);
             ans= Math.max(ans,memo[i]);
         }
         return ans;
