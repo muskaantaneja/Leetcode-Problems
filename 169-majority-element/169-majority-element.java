@@ -11,22 +11,16 @@ class Solution {
             map.put(i,j);
         }
         
-        for(int i : map.keySet())
-        {
-           // System.out.println( i +" = "+ map.get(i));
-        }
         int h =0;
         int k = nums.length/2;
         for(int i : map.keySet())
         {
             if( map.get(i) > k)
             {
-                h = i;
-                break;
+                return i;
             }
         }
         
-   //     System.out.println( k +" " + h);
         return h;
     }
 }
