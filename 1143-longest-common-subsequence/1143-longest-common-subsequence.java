@@ -26,7 +26,25 @@ class Solution {
                     dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
             }
         }
-        
+        int i =n,j=m;
+        String g ="";
+        while(i>0 && j>0)
+        {
+            if(text1.charAt(i-1) == text2.charAt(j-1))
+            {
+                g = text1.charAt(i-1)+g;
+                i--;
+                j--;
+            }
+            else
+            {
+                if(dp[i][j-1] > dp[i-1][j])
+                    j--;
+                else
+                    i--;
+            }
+        }
+        System.out.println(g);
         return dp[n][m];
     }
 }
