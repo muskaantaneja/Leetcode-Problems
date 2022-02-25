@@ -1,8 +1,8 @@
 class Solution {
     public int longestCommonSubsequence(String text1, String text2) {
         //if(text1.length() > text2.length())
-        if(text1.length()==0 || text2.length()==0)
-            return 0;
+        // if(text1.length()==0 || text2.length()==0)
+        //     return 0;
         return longestsubseq(text1, text2,text1.length(),text2.length());
        // return longestsubseq(text2, text1,text2.length()-1,text1.length()-1);
     }
