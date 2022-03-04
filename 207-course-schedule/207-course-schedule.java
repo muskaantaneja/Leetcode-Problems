@@ -42,7 +42,9 @@ class Solution {
             {
                 indegree[i]--;
                 if(indegree[i]==0)
+                {
                     q.add(i);
+                }
             }
         }
          
