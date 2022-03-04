@@ -27,11 +27,13 @@ class Solution {
         
         Queue<Integer> q= new LinkedList<>();
         
+         int ans=0;
         for(int i =0; i<graph.size(); i++)
         {
             if(indegree[i]==0)
             {
                 q.add(i);
+                ans++;
             }
         }
          
@@ -44,6 +46,7 @@ class Solution {
                 if(indegree[i]==0)
                 {
                     q.add(i);
+                    ans++;
                 }
             }
         }
@@ -53,9 +56,11 @@ class Solution {
         {
             if(indegree[i]!=0)
             {
-                return false;
+                
             }
         }
+         if(ans!=graph.size())
+             return false;
         return true;
     }
 }
