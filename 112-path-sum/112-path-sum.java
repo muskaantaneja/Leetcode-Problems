@@ -22,11 +22,12 @@ class Solution {
     }
     public boolean pathsum(TreeNode root, int target)
     {
+         if(root==null)
+            return false;
+        
         if(target-root.val==0 && root.right==null&&root.left==null)
             return true;
         
-        if(root==null)
-            return false;
         
         return hasPathSum(root.left, target-root.val)||hasPathSum(root.right, target-root.val);
     }
