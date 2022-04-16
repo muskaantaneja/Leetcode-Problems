@@ -17,23 +17,22 @@ class Solution {
     public boolean isValidBST(TreeNode root) {
         if(root==null)
             return true;
-        List<Integer> arr= new ArrayList<>();
-        inorder(root,arr);
-       // List <Integer> ans = new ArrayList(arr);
-        for(int i =0;i<arr.size()-1;i++)
-        {
-            if(arr.get(i)>=arr.get(i+1))
-                return false;
-        }
-        return true;
+        long min[] = new long[1];
+    min[0]=-99999999999l;
+       return isvalid(root,min);
     }
-    public void inorder(TreeNode root,List<Integer> arr)
+    public boolean isvalid(TreeNode root,long[] min)
     {
         if(root==null)
-            return;
-        inorder(root.left,arr);
-        arr.add(root.val);
-        inorder(root.right,arr);
-        return;
+            return true;
+        
+         boolean l = isvalid(root.left,min);
+         if(root.val<=min[0] )
+         return false;
+        
+        min[0] = root.val;
+        boolean r = isvalid(root.right,min);
+        
+        return l && r;
     }
 }
