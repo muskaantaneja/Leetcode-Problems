@@ -15,29 +15,25 @@
  */
 class Solution {
     public TreeNode bstFromPreorder(int[] preorder) {
-        int[] inorder = new int[preorder.length];
-        for(int i =0;i<inorder.length;i++)
-        inorder[i] = preorder[i];
-        Arrays.sort(inorder);
-   HashMap<Integer, Integer> inorderHashMap = new HashMap<>();
-        for(int i = 0; i < inorder.length; i++){
-            inorderHashMap.put(inorder[i], i);
-        }
-        int arr[] = new int[1];
-        arr[0] = 0;
-        return construct(preorder,arr,inorderHashMap,0,inorder.length-1);
+        int arr[] =new int[1];
+        arr[0] = 100000;
+        return construct(preorder,new int[1],arr);
     }
     
-    private TreeNode construct(int[] preorder,int[] arr,HashMap <Integer,Integer> inorderHashMap,int l,int r)
+    private TreeNode construct(int[] preorder,int[] index,int[] arr)
     {
-        if(l>r)
+        if(index[0] >= preorder.length || preorder[index[0]] > arr[0] )
             return null;
         
-        TreeNode root = new TreeNode(preorder[arr[0]]);
-        int index = inorderHashMap.get(preorder[arr[0]]);
-        arr[0] = arr[0] +1;
-        root.left = construct(preorder,arr,inorderHashMap,l,index-1);
-        root.right = construct(preorder,arr,inorderHashMap,index+1,r);
+        TreeNode root = new TreeNode(preorder[index[0]]);
+        int temp = arr[0];
+        
+        arr[0] = preorder[index[0]];
+        index[0]++;
+        root.left = construct(preorder,index,arr);
+        
+        arr[0] = temp;
+        root.right = construct(preorder,index,arr);
         
         return root;
     }
