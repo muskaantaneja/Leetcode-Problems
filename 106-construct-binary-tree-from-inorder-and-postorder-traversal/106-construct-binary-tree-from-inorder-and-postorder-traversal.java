@@ -15,34 +15,27 @@
  */
 class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-     HashMap<Integer, Integer> inorderHashMap = new HashMap<>();
+    HashMap<Integer, Integer> inorderHashMap = new HashMap<>();
         for(int i = 0; i < inorder.length; i++){
             inorderHashMap.put(inorder[i], i);
         }
-        
-        int[] preIndex = new int[1];
-        preIndex[0] = postorder.length - 1;
-        return constructTree(postorder, inorderHashMap, 0, postorder.length - 1, preIndex);
-        
+        int arr[] = new int[1];
+        arr[0] = inorder.length-1;
+        return construct(postorder,arr,inorderHashMap,0,inorder.length-1);
     }
     
-    private TreeNode constructTree(int[] postorder, HashMap<Integer, Integer> inorderHashMap, int start, int end, int[] preIndex){
-        if(start > end ){
+    private TreeNode construct(int[] postorder,int[] arr,HashMap <Integer,Integer> inorderHashMap,int l,int r)
+    {
+        if(l>r)
             return null;
-        }
         
-        int currentVal = postorder[preIndex[0]];
-        int currentIndex = inorderHashMap.get(currentVal);
-        preIndex[0]--;
-        
-        TreeNode root = new TreeNode(currentVal);
-        
-        root.right = constructTree(postorder, inorderHashMap, currentIndex + 1, end, preIndex);
-        root.left = constructTree(postorder, inorderHashMap, start, currentIndex - 1, preIndex);
-        
+        TreeNode root = new TreeNode(postorder[arr[0]]);
+        int index = inorderHashMap.get(postorder[arr[0]]);
+        arr[0] = arr[0] - 1;
+        root.right = construct(postorder,arr,inorderHashMap,index+1,r);
+         root.left = construct(postorder,arr,inorderHashMap,l,index-1);
         
         return root;
-        
     }
-    
 }
+   
