@@ -19,27 +19,23 @@ class Solution {
         for(int i = 0; i < inorder.length; i++){
             inorderHashMap.put(inorder[i], i);
         }
-        
-        return constructTree(preorder, inorderHashMap, 0, preorder.length - 1, new int[1]);
-        
+        int arr[] = new int[1];
+        arr[0] = 0;
+        return construct(preorder,arr,inorderHashMap,0,inorder.length-1);
     }
     
-    private TreeNode constructTree(int[] preorder, HashMap<Integer, Integer> inorderHashMap, int start, int end, int[] preIndex){
-        if(start > end ){
+    private TreeNode construct(int[] preorder,int[] arr,HashMap <Integer,Integer> inorderHashMap,int l,int r)
+    {
+        if(l>r)
             return null;
-        }
         
-        int currentVal = preorder[preIndex[0]];
-        int currentIndex = inorderHashMap.get(currentVal);
-        preIndex[0]++;
-        
-        TreeNode root = new TreeNode(currentVal);
-        
-        root.left = constructTree(preorder, inorderHashMap, start, currentIndex - 1, preIndex);
-        root.right = constructTree(preorder, inorderHashMap, currentIndex + 1, end, preIndex);
+        TreeNode root = new TreeNode(preorder[arr[0]]);
+        int index = inorderHashMap.get(preorder[arr[0]]);
+        arr[0] = arr[0] +1;
+        root.left = construct(preorder,arr,inorderHashMap,l,index-1);
+        root.right = construct(preorder,arr,inorderHashMap,index+1,r);
         
         return root;
-        
     }
-    
 }
+   
