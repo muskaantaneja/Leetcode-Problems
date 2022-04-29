@@ -34,37 +34,47 @@ class Solution {
     // Function to detect cycle in a directed graph.
     public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
         // code here
-        HashSet<Integer> visited = new HashSet<>();
-        for(int i =0;i<adj.size();i++)
+        int[] indegree = new int[V];
+        
+        for(int i=0; i<V;i++)
         {
-            if(!visited.contains(i))
+            for(int j : adj.get(i))
+            indegree[j]++;
+        }
+        
+        Queue <Integer> q = new LinkedList<>();
+        
+        for(int i =0;i<V;i++)
+        {
+            if(indegree[i] == 0)
+            q.add(i);
+        }
+        
+        while(q.size() > 0)
+        {
+            
+            int cs = q.size();
+            
+            while(cs>0)
             {
-               if( cyclic(i,adj,visited,new HashSet<>()) == true)
-               return true;
+                int cn = q.poll();
+                
+                for(int j : adj.get(cn))
+                {
+                    indegree[j]--;
+                    if(indegree[j] == 0)
+                    q.add(j);
+                }
+                
+                cs--;
             }
         }
-        return false;
-    }
-    private boolean cyclic(int current , ArrayList<ArrayList<Integer>> adj , HashSet<Integer> visited, HashSet<Integer> recstack){
-        if(current == adj.size()-1)
-        return false;
         
-        if(visited.contains(current))
+        for(int i : indegree)
         {
-            if(recstack.contains(current))
+            if(i != 0)
             return true;
-            return false;
         }
-        
-        visited.add(current);
-        recstack.add(current);
-       for(int i : adj.get(current))
-       {
-           if(cyclic(i,adj,visited,recstack)==true)
-           return true;
-       }
-        
-        recstack.remove(current);
         
         return false;
     }
