@@ -10,28 +10,33 @@ class Solution {
             return true;
         return false;
     }
+    
     public String backspacestring(String s){
-        System.out.println(s);
-        String h = "";
-        String f= "" ;
+
+        
         for(int i = 0 ;  i>=0 && i<s.length()-1 ; i++){
+             String f= "" ;
+            
             if(s.charAt(i) == '#')
             {
-                f = f + s.substring(i+1);
-                s = f;
+                s = s.substring(i+1);
                 i = i - 1;
             }
-           else if( s.charAt(i+1)  ==  '#'){
+           else if( s.charAt(i+1)  ==  '#' ){
+               
                 f = s.substring(0,i);
-                if(i+2 < s.length())
+               
+                if(i+2 < s.length()){
                     f = f + s.substring(i+2);
-                s = f;
-                i = i - 2;
-               if(i<0)
+                }
+                
+               s = f;
+               
+               i -= 2;
+               if(i < 0)
                    i = -1 ;
+               
             }
-            f = "";
-             System.out.println(i + "_" + s)  ;
         }
         
         return s ;
