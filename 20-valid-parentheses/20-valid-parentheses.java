@@ -14,11 +14,7 @@ class Solution {
                     return false;
                 
                 int stackelement = stack.peek();
-                if(currentchar == ')' && stackelement != '(')
-                    return false;
-                else if(currentchar == ']' && stackelement != '[')
-                    return false;
-                else if(currentchar == '}' && stackelement != '{')
+                if((currentchar == ')' && stackelement != '(') ||( currentchar == ']' && stackelement !=                        '[') ||(currentchar == '}' && stackelement != '{'))
                     return false;
                 stack.pop();
                 
