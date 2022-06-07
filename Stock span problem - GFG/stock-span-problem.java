@@ -43,12 +43,10 @@ class Solution
     {
         // Your code here
         int[] span = new int[price.length];
-        span[0] = 1;
         Stack<Integer> stack = new Stack<>();
         
-        stack.push(0);
         
-        for(int i = 1 ; i<price.length ; i++){
+        for(int i = 0 ; i<price.length ; i++){
             
                 while(!stack.isEmpty() && price[stack.peek()] <= price[i]){
                     stack.pop();
