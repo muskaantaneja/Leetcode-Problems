@@ -50,15 +50,6 @@ class Solution
         
         for(int i = 1 ; i<price.length ; i++){
             
-            
-         if(price[stack.peek()] > price[i])
-            {
-                span[i] = 1;
-                
-            }
-            
-            else if(price[stack.peek()] <= price[i])
-            {
                 while(!stack.isEmpty() && price[stack.peek()] <= price[i]){
                     stack.pop();
                 }
@@ -66,8 +57,6 @@ class Solution
                 span[i] = i+1;
                 else
                 span[i] = i - stack.peek();
-                
-            }
             stack.push(i);
         }
         return span;
