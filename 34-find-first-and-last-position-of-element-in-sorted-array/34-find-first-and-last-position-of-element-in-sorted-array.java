@@ -26,6 +26,11 @@ class Solution {
         
         answer[0] = ans;
         
+        if(ans == -1)
+        {
+            answer[1] = -1;
+            return answer;
+        }
         ans = -1;
         start = 0;
         end = nums.length - 1;
