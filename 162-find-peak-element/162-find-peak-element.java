@@ -4,21 +4,14 @@ class Solution {
         int start =0;
         int end = nums.length - 1;
         
+        if(nums.length == 0)
+            return nums[0];
         while(start<end){
             
             System.out.println(start +"  "+end);
             
             int mid = start + (end - start)/2;
-            
-            // if(start == end )
-            //     return start;
-            
-//              if(nums[mid+1] < nums[mid])
-//                 return mid;
-            
-//             if(nums[mid] < nums[mid-1])
-//                 return mid-1;
-            
+     
             
             if(nums[mid] <= nums[mid+1]){
 
