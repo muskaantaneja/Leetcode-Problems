@@ -45,10 +45,10 @@ class Solution {
                   left++;
             }
             
-            int a = right - left + 1;
+           
            // map.put(key , right);
             if(map.size() == k)
-            ans = Math.max(ans , a);
+            ans = Math.max(ans , right - left + 1);
            //  System.out.println( s + " "+ left);    
         }
         return ans;
