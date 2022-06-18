@@ -47,11 +47,17 @@ class Solution
             
             if(memo.containsKey(key)){
                // int length = i - memo.get(key);
-                ans += memo.get(key);
+               // ans += memo.get(key);
                 memo.put(key , memo.get(key) +1);
             }
             else
             memo.put(key , 1);
+        }
+        
+        for(String i : memo.keySet()){
+            
+            int n = memo.get(i);
+            ans += ((n-1)*(n))/2;
         }
         return ans;
     }
