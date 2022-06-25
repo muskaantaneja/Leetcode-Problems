@@ -43,15 +43,16 @@ class Hanoi {
         
         towerofhanoi(N , 1 , 3 , 2 , ans);
         
-        return ans[0];
+        return ans[0]-1;
     }
     public void towerofhanoi(int N, int from, int to, int aux, int[] ans){
         
         if( N == 1){
             System.out.println("move disk " + N +" from rod "+from+" to rod " +to);
+            ans[0]++;
             return ;
         }
-        ans[0]++;
+       // ans[0]++;
         towerofhanoi(N-1 , from , aux , to , ans);
          System.out.println("move disk " + N +" from rod "+from+" to rod " +to);
          ans[0]++;
