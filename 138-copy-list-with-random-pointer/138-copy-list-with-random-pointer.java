@@ -16,37 +16,39 @@ class Node {
 class Solution {
     public Node copyRandomList(Node head) {
        
-        
-        Node dummyNode = new Node(10001);
-        Node runner = dummyNode;
+        Node head2 = null;
+        Node temp = head;
+        Node temp2 = null;
         
         HashMap<Node,Node> map = new HashMap<>();
         
-        Node current = head;
-        while(current != null){
-            Node newNode = new Node(current.val);
-            
-            map.put(current,newNode);
-            
-            runner.next = newNode;
-            runner = newNode;
-            
-            current = current.next;
-        }
-        
-        runner = dummyNode.next;
-        current = head;
-        while(current != null){
-            
-            if(current.random != null){
-                runner.random = map.get(current.random);
+        while(temp != null){
+            if(head2==null){
+                head2 = new Node(temp.val);
+                temp2 = head2;
+            }
+            else
+            {
+                temp2.next =  new Node(temp.val);
+                temp2 = temp2.next;
             }
             
-            current = current.next;
-            runner = runner.next;
+            map.put(temp , temp2);
+            temp = temp.next;
+           
         }
         
-        return dummyNode.next;
-        
+        temp = head;
+        temp2 = head2;
+        while(temp!=null){
+            Node rand = temp.random;
+            if(rand == null)
+                temp2.random = null;
+            else
+                temp2.random = map.get(rand);
+            temp = temp.next;
+            temp2 = temp2.next;
+        }
+        return head2;
     }
 }
