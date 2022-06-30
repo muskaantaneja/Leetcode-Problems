@@ -1,0 +1,120 @@
+// { Driver Code Starts
+import java.util.*;
+
+class Node
+{
+	int data;
+	Node next;
+	Node(int d)
+	{
+		data = d;
+		next = null;
+	}
+}
+
+class Is_LinklIst_Circular
+{
+	Node head;
+	
+	
+	public static void main(String args[])
+	{
+	    Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		
+		while(t>0)
+		{
+			int n = sc.nextInt();
+			int l = sc.nextInt();
+			
+			sc.nextLine().trim().split(" ");
+			String str[]= sc.nextLine().trim().split(" ");
+            Node head = null, tail = null;
+            head = new Node(Integer.parseInt(str[0]));
+            tail = head;
+            for(int i = 1; i < n ; i++)
+            {
+                tail.next = new Node(Integer.parseInt( str[i]));
+                tail = tail.next;
+            }
+                
+			
+			if(l==1 && n>=1)
+			{
+				Node temp = head;
+				while(temp.next != null)
+				{
+					temp = temp.next; 
+				}
+				temp.next = head;
+			}
+			
+			GfG g = new GfG();
+			boolean b = g.isCircular(head);
+			if(b==true)
+			System.out.println(1);
+			else 
+			System.out.println(0);
+		t--;
+		}
+	}
+}
+
+// } Driver Code Ends
+
+
+/* Structure of LinkedList
+class Node
+{
+	int data;
+	Node next;
+	Node(int d)
+	{
+		data = d;
+		next = null;
+	}
+}
+*/
+class GfG
+{
+    boolean isCircular(Node head)
+    {
+	// Your code here
+	if(detectCycle(head) == head){
+	    return true;
+	}
+	return false;
+    }
+    static Node detectCycle(Node head) {
+        
+        if(head == null|| head.next == null)
+            return null;
+        
+        Node p = head;
+        Node q = head;
+        if(p.next==null || q.next.next == null)
+        {
+            return null;
+        }
+        
+        p = p.next;
+        q = q.next.next;
+        while(p!=q){
+            if( p == null || q==null)
+                return null;
+            p=p.next;
+            if(q.next == null)
+                return null;
+            q = q.next.next;
+        }
+        
+        Node empty = head;
+        empty = empty.next;
+        while(empty != p.next){
+            empty = empty.next;
+            p = p.next;
+        }
+        
+        return p;
+    }
+}
