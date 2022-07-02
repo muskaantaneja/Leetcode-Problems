@@ -15,24 +15,24 @@
  */
 class Solution {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        ArrayList<Integer> r1 = new ArrayList<>();
-        ArrayList<Integer> r2 = new ArrayList<>();
-        leafnodes(root1,r1);
-        leafnodes(root2,r2);
-        if(r1.equals(r2))
+        
+        String s1 = leafnodes(root1);
+        String s2 = leafnodes(root2);
+        
+        if(s1.equals(s2))
             return true;
         return false;
+        
     }
-    public void leafnodes(TreeNode root , ArrayList<Integer> list)
-    {
-        if(root==null)
-            return;
-        if(root.left==null&&root.right==null)
-        {
-            list.add(root.val);
-            return;
+    public String leafnodes(TreeNode root){
+        
+        if(root == null)
+            return "";
+        
+        if(root.left == null && root.right == null){
+            return "_" + root.val;
         }
-        leafnodes(root.left,list);
-         leafnodes(root.right,list);
+        
+        return "" + leafnodes(root.left) + leafnodes(root.right);
     }
 }
