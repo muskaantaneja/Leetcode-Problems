@@ -28,11 +28,9 @@ class Solution {
         if(root.val != val)
             return false;
         
-        if(!univaluedtree(root.left , val))
+        if(!univaluedtree(root.left , val) || !univaluedtree(root.right , val))
             return false;
         
-        if(!univaluedtree(root.right , val))
-            return false;
         
         return true;
     }
