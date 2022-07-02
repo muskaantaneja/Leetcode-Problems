@@ -15,26 +15,25 @@
  */
 class Solution {
     public boolean isUnivalTree(TreeNode root) {
-        if(root==null)
+        
+        if(root == null)
             return true;
-        int val = root.val;
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        while(q.size()>0)
-        {
-            int currentsize =q.size(); 
-            while(currentsize>0)
-            {
-                TreeNode cn = q.poll();
-                if(cn.val!=val)
-                    return false;
-                if(cn.left!=null)
-                    q.add(cn.left);
-                if(cn.right!=null)
-                    q.add(cn.right);
-                currentsize--;
-            }
-        }
+        return univaluedtree(root , root.val);
+    }
+    public boolean univaluedtree(TreeNode root , int val){
+        
+        if(root == null)
+            return true;
+        
+        if(root.val != val)
+            return false;
+        
+        if(!univaluedtree(root.left , val))
+            return false;
+        
+        if(!univaluedtree(root.right , val))
+            return false;
+        
         return true;
     }
 }
