@@ -22,9 +22,13 @@ class Solution {
         if( p == null || q==null)
             return false;
         
-        if(p.val != q.val)
-            return false;
+        return issame(p).equals(issame(q));
+    }
+    public String issame(TreeNode p){
+        if(p == null){
+            return "-";
+        }
         
-        return isSameTree(p.left , q.left) && isSameTree(p.right , q.right);
+        return p.val + "-" + issame(p.left) + "-" + issame(p.right);
     }
 }
