@@ -13,81 +13,55 @@
  *     }
  * }
  */
-class Pair {
-    int level=-1;
-    TreeNode parent= new TreeNode(-1);
-    Pair(){}
-    Pair(int l,TreeNode p){
-        level = l;
-        parent = p;
+class Pair{
+    TreeNode parent ;
+    int depth ;
+    Pair(TreeNode x , int y){
+        parent = x;
+        depth = y;
     }
     
 }
 class Solution {
     public boolean isCousins(TreeNode root, int x, int y) {
-        List<Integer> list=new ArrayList<>();
-        Pair pairx= new Pair(),pairy = new Pair();
-        cousins(root,x,y,pairx,pairy,0);
-        if(pairx.level==pairy.level && pairx.parent!=pairy.parent)
-            return true;
-        return false;
         
-    }
-    public void cousins(TreeNode root, int x, int y,Pair pairx,Pair pairy,int level)
-    {
         if(root==null)
-            return ;
-        if(root.right==null && root.left==null)
-            return;
-        if(root.right != null && root.left==null)
+            return false;
+        
+        Pair xinfo = new Pair(null , -1);
+        Pair yinfo = new Pair(null , -1);
+        return checkCousins(root , null ,  0 ,x , y , xinfo , yinfo);
+    }
+    
+    public boolean checkCousins(TreeNode root , TreeNode parent , int depth ,int x ,                                 int y,Pair xinfo ,Pair yinfo){
+        
+        if(root == null)
+            return false;
+        
+        if(root.val == x)
         {
-            if(root.right.val==x){
-                pairx.level=level+1;
-                pairx.parent = root;
-            }
-            if(root.right.val==y){
-                pairy.level=level+1;
-                pairy.parent = root;
-            }
-            if(pairx.level==-1||pairy.level==-1)
-            cousins(root.right,x,y,pairx,pairy,level+1);
-            return;
+            xinfo.parent = parent;
+            xinfo.depth = depth;
         }
-        if(root.left != null && root.right==null)
+        if(root.val == y)
         {
-            if(root.left.val==x){
-                pairx.level=level+1;
-                pairx.parent = root;
-            }
-            if(root.left.val==y){
-                pairy.level=level+1;
-                pairy.parent = root;
-            }
-             if(pairx.level==-1||pairy.level==-1)
-            cousins(root.left,x,y,pairx,pairy,level+1);
-            return;
+            yinfo.parent = parent;
+            yinfo.depth = depth;
         }
-        if(root.right.val==x){
-                pairx.level=level+1;
-                pairx.parent = root;
-            }
-        if(root.right.val==y){
-                pairy.level=level+1;
-                pairy.parent = root;
-            }
-        if(root.left.val==x){
-                pairx.level=level+1;
-                pairx.parent = root;
-            }
-        if(root.left.val==y){
-                pairy.level=level+1;
-                pairy.parent = root;
+        if(xinfo.depth!=-1 && yinfo.depth!=-1){
+            
+            if(xinfo.depth == yinfo.depth && xinfo.parent != yinfo.parent)
+                return true;
+            else
+                return false;
         }
-        if(pairx.level==-1||pairy.level==-1)
-        {
-            cousins(root.left,x,y,pairx,pairy,level+1);
-            cousins(root.right,x,y,pairx,pairy,level+1);
-        }
-        return;
+        
+        if(checkCousins(root.left , root, depth+1 , x , y , xinfo , yinfo))
+            return true;
+        
+        if(checkCousins(root.right , root, depth+1 , x , y , xinfo , yinfo))
+            return true;
+        
+        return false;
     }
 }
