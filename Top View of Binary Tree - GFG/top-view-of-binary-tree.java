@@ -123,15 +123,16 @@ class Node{
 }
 */
 class Pair{
-    int hd;
-    Node node;
-    Pair(Node n,int h)
-    {
-        hd = h;
-        node = n;
+    
+    int depth ; 
+    int value;
+    
+    Pair(int val , int depth){
+        
+        value = val;
+        this.depth = depth;
     }
 }
-
 class Solution
 {
     //Function to return a list of nodes visible from the top view 
@@ -139,37 +140,37 @@ class Solution
     static ArrayList<Integer> topView(Node root)
     {
         // add your code
-        Queue<Pair> q = new LinkedList<>();
+        HashMap<Integer , Pair> map = new HashMap<>();
+        ArrayList<Integer> arr = new ArrayList<>();
+        
+        topview(root , 0 ,0, map , arr);
+        Collections.sort(arr);
         ArrayList<Integer> ans = new ArrayList<>();
-        if(root==null)
+        for(int i : arr){
+            ans.add(map.get(i).value);
+        }
         return ans;
-        HashMap<Integer,Integer> map = new HashMap<>(); 
-        Pair p = new Pair(root,0);
-        q.add(p);
-        int l =100000;
-        int r=-100000;
-        while(q.size()>0)
+    }
+    static void topview(Node root , int level,int depth,HashMap<Integer , Pair> map ,ArrayList<Integer> arr){
+        
+        if(root == null)
+        return;
+        
+        if(!map.containsKey(level))
         {
-            int cs = q.size();
-            while(cs>0)
+            map.put(level , new Pair(root.data , depth));
+            arr.add(level);
+        }
+        else if (map.containsKey(level))
+        {
+            Pair check = map.get(level );
+            if(check.depth > depth)
             {
-                Pair c = q.poll();
-                Node cn = c.node;
-                l = Math.min(l,c.hd);
-                r = Math.max(r,c.hd);
-                if(!map.containsKey(c.hd))
-                {
-                    map.put(c.hd,cn.data);
-                }
-                if(cn.left!=null)q.add(new Pair(cn.left,c.hd-1));
-                 if(cn.right!=null)q.add(new Pair(cn.right,c.hd+1));
-                 cs--;
+                map.put(level , new Pair(root.data , depth));
             }
         }
-        for(int i =l;i<=r;i++)
-        {
-            ans.add(map.get(i));
-        }
-        return ans;
+        topview(root.left , level - 1,depth+1, map ,arr);
+        topview(root.right , level + 1, depth+1 ,map ,arr);
+        return;
     }
 }
