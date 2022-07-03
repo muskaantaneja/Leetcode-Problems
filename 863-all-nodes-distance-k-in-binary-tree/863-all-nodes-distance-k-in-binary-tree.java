@@ -9,35 +9,65 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        HashMap<TreeNode,TreeNode> parentmap = new HashMap<>();
-        parentnodes(root,null,parentmap);
-        List<Integer> answer = new ArrayList<>();
-        knodes(target,k,answer,new HashSet<>(),parentmap);
-        return answer;
+        List<Integer> ans = new ArrayList<>();
+        
+        HashMap<TreeNode , TreeNode> parents = new HashMap<>();
+        
+         findparent(root , parents,null);
+        root = findtarget(root ,target);
+        nodesDistanceK(root , target , k ,new HashSet<>() , parents ,ans);
+        
+        return ans;
     }
-    private void parentnodes(TreeNode root,TreeNode parent,HashMap<TreeNode,TreeNode> parentmap)
-    {
-        if(root==null)
-            return;
-        parentmap.put(root,parent);
-        parentnodes(root.left,root,parentmap);
-        parentnodes(root.right,root,parentmap);
+    
+    public TreeNode findtarget(TreeNode root , TreeNode target){
+        if(root == null)
+            return null;
+        
+        if(root == target)
+            return root;
+        
+        TreeNode h = null;
+        h = findtarget(root.left , target);
+        if( h != null)
+            return h ;
+        return findtarget(root.right , target);
+    }
+    public void findparent(TreeNode root, HashMap<TreeNode,TreeNode> map,TreeNode                                   parent){
+        
+        if(root == null)
+            return ;
+        map.put(root , parent);
+        
+        findparent(root.left,map,root);
+        findparent(root.right,map,root);
+        
         return;
     }
-    private void knodes(TreeNode root,int k,List<Integer> answer,HashSet<Integer>visited,HashMap<TreeNode,TreeNode> parentmap)
+    
+    public void nodesDistanceK(TreeNode root , TreeNode target , int k , HashSet<TreeNode> visited , 
+                              HashMap<TreeNode , TreeNode> parents , List<Integer> ans)
     {
-        if(root==null || k<0 ||visited.contains(root.val))
+        if(root == null)
             return;
-         visited.add(root.val);
+        
+        if(visited.contains(root))
+            return;
+        
         if(k==0)
         {
-                answer.add(root.val);
-                return;
+            ans.add(root.val);
+            return;
         }
-        visited.add(root.val);
-        knodes(root.left,k-1,answer,visited,parentmap);
-        knodes(root.right,k-1,answer,visited,parentmap);
-        knodes(parentmap.get(root),k-1,answer,visited,parentmap);
+        
+        if(k<0)
+            return;
+        
+        visited.add(root);
+        nodesDistanceK( root.right ,target ,k-1,visited ,parents ,ans);
+        nodesDistanceK( root.left ,target ,k-1,visited ,parents ,ans);
+        nodesDistanceK( parents.get(root) ,target ,k-1,visited ,parents ,ans);
+        
         return;
     }
 }
