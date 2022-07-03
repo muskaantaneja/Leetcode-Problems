@@ -20,7 +20,7 @@ class Solution {
         return ans;
     }
     
-    public void findparent(TreeNode root, HashMap<TreeNode,TreeNode> map,TreeNode                                   parent){
+    public void findparent(TreeNode root, HashMap<TreeNode,TreeNode> map,TreeNode                                                             parent){
         
         if(root == null)
             return ;
@@ -47,8 +47,6 @@ class Solution {
             return;
         }
         
-        if(k<0)
-            return;
         
         visited.add(root);
         nodesDistanceK( root.right ,k-1,visited ,parents ,ans);
