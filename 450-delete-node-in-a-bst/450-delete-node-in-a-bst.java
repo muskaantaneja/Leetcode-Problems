@@ -15,48 +15,47 @@
  */
 class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
-        if(root==null)
+       
+        if(root == null)
             return root;
         
-        if(root.val<key)
-            root.right = deleteNode(root.right,key);
-        
-        else if(root.val>key)
-            root.left = deleteNode(root.left,key);
-        
-        else
-        {
-           if(root.left==null && root.right==null)
-           {
-               root = null;
-               return root;
-           }
-            if(root.left==null)
-            {
-                root = root.right;
-                return root;
+        if(root.val == key){
+            
+            if(root.left == null && root.right == null)
+                return null;
+            
+            if(root.right == null)
+                return root.left;
+            
+            if(root.left == null)
+                return root.right;
+            
+            TreeNode q =root;
+            q = q.right;
+            while(q.left!=null){
+                q = q.left;
             }
             
-           if(root.right==null)
-            {
-              root = root.left;
-                return root;
-            }
-            
-            if(root.left!=null && root.right!=null)
-            {
-                TreeNode temp = root.right;
-                while(temp.left!=null)
-                {
-                    temp = temp.left;
-                }
-                int h = root.val;
-                root.val=temp.val;
-                temp.val = h;
-                root.right = deleteNode(root.right,temp.val);
-                return root;
-            }
+            root.val = q.val;
+             root.right = deleteNode(root.right , root.val);
+            return root;
         }
+        
+        if(key > root.val)
+            root.right = deleteNode(root.right , key);
+        else if(key < root.val)
+            root.left = deleteNode(root.left , key);
+        
         return root;
     }
+    // public TreeNode searchBST(TreeNode root, int val) {
+    //     if(root==null)
+    //         return null;
+    //     if(root.val == val)
+    //         return root;
+    //     if(val > root.val)
+    //         return searchBST(root.right,val);
+    //     else
+    //         return searchBST(root.left,val);
+    // }
 }
