@@ -1,21 +1,22 @@
 class Solution {
     public int rob(int[] nums) {
         
-        return houserobber(nums , 0 , nums.length ,new HashMap<>());
-    }
-    public int houserobber(int[] nums , int current , int target , HashMap<Integer , Integer> memo) 
-    {
-        if(current >= target)
-            return 0;
+        int n = nums.length ;
+        int memo[] = new int[n + 1];
         
-        if(memo.containsKey(current))
-            return memo.get(current);
+        memo[n] = 0;
+        memo[n-1] = nums[n-1];
         
-        int consider = nums[current] + houserobber(nums , current+2 ,target , memo );
-        int notconsider = houserobber(nums , current+1 ,target , memo );
         
-        memo.put( current , Math.max(consider , notconsider));
+        for(int i = n-2 ; i >= 0 ; i-- )
+        {
+            int consider = nums[i] + memo[i+2];
+            int notconsider = memo[i+1];
+            
+            memo[i] = Math.max(consider , notconsider);
+        }
         
-        return memo.get(current);
+        
+        return memo[0];
     }
 }
