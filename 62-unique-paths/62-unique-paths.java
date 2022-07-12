@@ -1,28 +1,21 @@
 class Solution {
     public int uniquePaths(int m, int n) {
         
-        return countpaths(m , n , 0 , 0, new HashMap<>());
-    }
-    public int countpaths(int m , int n , int row , int col , HashMap<String,Integer> memo){
+       int dp[][]= new int[m][n];
         
-        if(row == m-1 && col == n-1)
-            return 1;
+       dp[m-1][n-1] = 1;
         
-        if( row >= m || col >= n || row < 0 || col<0){
+        for(int i = m-1 ; i >= 0 ; i--){
             
-            return 0;
+            for(int j = n-1 ; j >= 0 ; j--){
+                
+                if(i-1 >= 0)
+                    dp[i-1][j] += dp[i][j];
+                if(j-1 >= 0)
+                    dp[i][j-1] += dp[i][j];
+            }
         }
         
-        String key = row + "_" + col;
-        
-        if(memo.containsKey(key))
-            return memo.get(key);
-        
-        int right = countpaths(m , n , row , col + 1 , memo);
-        int down = countpaths(m , n , row + 1, col , memo);
-        
-        memo.put( key , right + down);
-        
-        return memo.get(key);
-    }
+        return dp[0][0];
+}
 }
