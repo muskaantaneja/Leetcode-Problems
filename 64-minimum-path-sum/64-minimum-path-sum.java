@@ -3,26 +3,26 @@ class Solution {
        // int ans = 0;
         int n = grid.length;
         int m = grid[0].length;
-        int[][] memo = new int[n+1][m+1];
+        int[][] dp = new int[n][m];
         
-       return minpathSum(grid , 0 , 0, n ,m, memo);
-    }
-    static int minpathSum(int grid[][] , int row , int col , int n ,int m , int[][] memo)
-    {
-        if(row >= n || col>= m || col<0 || row<0)
-        return 1000000;
+        for(int arr[] : dp)
+            Arrays.fill(arr , 200000);
         
-        if(row == n-1 && col == m-1)
-        return grid[row][col];
+       dp[n-1][m-1] = Math.min(dp[n-1][m-1] , grid[n-1][m-1]);
         
-        if(memo[row][col] != 0)
-        return memo[row][col];
+        for(int row = n-1 ; row>=0 ; row--){
+            
+            for(int col = m-1; col>=0 ; col--)
+            {
+                
+                if(row - 1 >= 0)
+                dp[row - 1][col] = Math.min(dp[row][col] + grid[row-1][col],dp[row-1][col]);
+                
+                if(col - 1 >= 0)
+                dp[row][col-1] = Math.min(dp[row][col] + grid[row][col-1],dp[row][col-1]);
+            }
+        }
         
-        int down = grid[row][col] + minpathSum(grid , row + 1 , col , n ,m, memo);
-        int right = grid[row][col] + minpathSum(grid , row  , col + 1, n , m ,memo);
-        
-        memo[row][col] = Math.min(down , right);
-        
-        return memo[row][col];
+        return dp[0][0];
     }
 }
