@@ -14,10 +14,15 @@ class Solution {
             
             for(int j = n-1 ; j >= 0 ; j--){
                 
+                if(obstacleGrid[i][j] != 1){
+                    
                 if(i-1 >= 0 && obstacleGrid[i-1][j] != 1)
                     dp[i-1][j] += dp[i][j];
+                    
                 if(j-1 >= 0 && obstacleGrid[i][j -1] != 1)
                     dp[i][j-1] += dp[i][j];
+                    
+                }
             }
         }
         
