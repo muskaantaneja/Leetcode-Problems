@@ -70,7 +70,7 @@ class Solution
             
             for(int w = 1 ; w <= W ; w++){
                 
-                int consider=-100000,notconsider=-100000;
+                int consider=0,notconsider=0;
                 if(w-wt[current]>=0)
                 {
                     consider = val[current] + dp[w-wt[current]][current+1];
