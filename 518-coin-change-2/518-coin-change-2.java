@@ -1,28 +1,35 @@
 class Solution {
     public int change(int amount, int[] coins) {
-        int ans = countcoins(coins , 0 , amount , new HashMap<>());
+        int ans = countcoins(coins ,amount);
         return ans;
     }
     
-    public int countcoins(int[] coins , int current , int target , HashMap<String ,Integer> memo){
+    public int countcoins(int[] coins ,int target){
         
-        if(target == 0)
-            return 1;
-        if(current >= coins.length)
-            return 0;
+        int n = coins.length;
+        int dp[][] = new int[n+1][target+1];
         
-        String key = current + "_" + target;
         
-        if(memo.containsKey(key))
-            return memo.get(key);
+        for(int i = 0 ; i<target+1 ; i++)
+            dp[n][i] = 0;
         
-        int consider = 0;
-        if(target >= coins[current])
-        consider = countcoins( coins , current , target - coins[current] , memo);
+        for(int i = 0 ; i<n+1 ; i++)
+            dp[i][0] = 1;
         
-        int notconsider =  countcoins( coins , current + 1, target  , memo);
-        memo.put(key , consider + notconsider);
+        for(int current = n-1; current >= 0 ; current--){
+            
+            for(int t = 1 ; t<= target ; t++)
+            {
+                 int consider = 0;
+                if(t >= coins[current])
+                consider = dp[current][t - coins[current]];
+
+                int notconsider =  dp[current + 1][t];
+                dp[current][t] = consider + notconsider;
+            }
+        }
+       
         
-        return memo.get(key);
+        return dp[0][target];
     }
 }
