@@ -10,8 +10,7 @@ class Solution {
         
         if((target + sum)% 2 != 0)
             return 0;
-        if(nums.length == 1 && target+sum == 0 &&sum!=0&& sum == -target)
-            return 1;
+       
         if(target == 0 && sum == 0)
             return (int)Math.pow(2 ,nums.length);
         
