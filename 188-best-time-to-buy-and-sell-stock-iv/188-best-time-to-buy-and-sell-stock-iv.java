@@ -1,33 +1,32 @@
 class Solution {
-    public int maxProfit(int k, int[] prices) {
-       return buyandsell(prices , 0 , 1 , k , new HashMap<>());
-    }
-    public int buyandsell(int[] prices , int current , int canbuy ,int trans,HashMap<String , Integer>memo){
+    public int maxProfit(int m, int[] prices) {
+       int canbuy = 1;
+        int trans = m;
+        int dp[][][]= new int[prices.length + 1][canbuy + 1][trans + 1];
         
-        if(trans == 0 && canbuy == 1 )
-            return 0;
         
-        if(current >= prices.length || trans<0)
-            return 0;
-        String key = current + "_" + canbuy + "_" + trans;
         
-        if(memo.containsKey(key))
-            return memo.get(key);
-        
-        int buy = 0,sell = 0,nothing=0;
-        
-        if(canbuy == 1)
-        {
-             buy =  -prices[current] + buyandsell(prices , current + 1 , 0 , trans - 1,memo);
-        }
-        else if( canbuy == 0){
+        for(int i = prices.length-1 ; i>=0 ; i--){//current
             
-            sell = prices[current] + buyandsell(prices , current + 1 , 1 , trans , memo);
-        }
+            for(int j = 0; j <=canbuy ; j++){//canbuy
+                
+                for(int k = 1 ; k  <= trans ; k++){//trans
+                    int buy = 0,sell = 0,nothing=0;
+                     if(j == 1)
+                     {
+                        buy =  -prices[i] + dp[i + 1][0][k];
+                     }
+                     else {
+            
+                         sell = prices[i] + dp[i + 1][1][k-1];
+                      }
          
-        nothing = buyandsell(prices , current + 1 , canbuy , trans ,memo);
-        
-        memo.put(key , Math.max(buy + sell , nothing));
-        return memo.get(key);
-    }
+                    nothing = dp[i + 1][j][k];
+                    dp[i][j][k] = Math.max(buy+sell , nothing);
+                }
+            }
+        }
+
+        return dp[0][canbuy][trans];
+}
 }
