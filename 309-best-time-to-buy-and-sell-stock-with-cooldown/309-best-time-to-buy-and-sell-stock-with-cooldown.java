@@ -16,7 +16,7 @@ class Solution {
                      {
                         buy =  -prices[i] + dp[i + 1][0];
                      }
-                     else {
+                     else if(i+2 <= prices.length+1) {
             
                          sell = prices[i] + dp[i + 2][1] ;
                       }
