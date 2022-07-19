@@ -16,7 +16,7 @@ class Solution {
         
         for(int i = prices.length-1 ; i>=0 ; i--){//current
             
-            for(int j = 1; j >=0 ; j--){//canbuy
+            for(int j = 0; j <=1 ; j++){//canbuy
                 
                 for(int k = 1 ; k  < 2 ; k++){//trans
                     int buy = 0,sell = 0,nothing=0;
