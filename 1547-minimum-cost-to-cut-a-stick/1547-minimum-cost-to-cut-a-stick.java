@@ -8,27 +8,31 @@ class Solution {
         
         arr.add(n);
         
-        return minimumcost(1 , arr.size()-2 , arr ,new HashMap<>());
+        return minimumcost( arr );
     }
-    public int minimumcost(int i , int j , ArrayList<Integer> arr, HashMap<String , Integer> memo){
+    public int minimumcost( ArrayList<Integer> arr){
         
-        if(i > j)
-            return 0;
+        int[][] dp = new int[arr.size()][arr.size()];
         
-        String key = i + "_" + j;
         
-        if(memo.containsKey(key))
-            return memo.get(key);
-        
-        int ans = 10000000;
-        
-        for(int k = i ; k <= j ; k++)
+        for(int i = arr.size()-2 ; i>=1 ; i--)
         {
-            ans = Math.min(ans , arr.get(j+1) - arr.get(i-1) +
-                           minimumcost(i , k-1, arr , memo) + minimumcost(k+1 , j , arr, memo));
-        }
+            for(int j = 1 ; j<= arr.size()-2; j++)
+            {
+                if(i>j)
+                    continue;
+                int ans = 10000000;
         
-        memo.put(key , ans);
-        return ans;
+                for(int k = i ; k <= j ; k++)
+                {
+                    ans = Math.min(ans , arr.get(j+1) - arr.get(i-1) +
+                           dp[i][k-1] + dp[k+1][j] );
+                }
+                dp[i][j] = ans;
+            }
+        }
+       
+      
+        return dp[1][arr.size()-2];
     }
 }
