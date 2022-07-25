@@ -1,22 +1,23 @@
 class Solution {
     public int fib(int n) {
         
-        return fibbo( n , new HashMap());
+        return fibbo( n , new int[n+1]);
     }
     
-    public int fibbo(int current , HashMap<Integer , Integer> memo){
+    public int fibbo(int current , int memo[]){
         
-        if(current == 0 || current == 1)
-            return current;
+        memo[0] = 0;
+        if(current == 0)
+            return 0;
+        memo[1] = 1;
         
-        if(memo.containsKey(current))
-            return memo.get(current);
+        for(int i = 2; i <= current ; i++)
+        {
+            int first = memo[i - 1];
+            int second = memo[i - 2];
         
-        int first = fibbo(current - 1 , memo);
-        int second = fibbo(current - 2 , memo);
-        
-        memo.put(current , first + second);
-        
-        return memo.get(current);
+            memo[i] = first + second;
+        }
+        return memo[current];
     }
 }
