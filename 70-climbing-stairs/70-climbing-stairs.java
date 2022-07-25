@@ -1,23 +1,23 @@
 class Solution {
     public int climbStairs(int n) {
         
-        return totalWays( n, new int[n+1]);
+        return totalWays( n, new int[n+2]);
     }
     
     public int totalWays(int n , int[] memo){
         
-        memo[0] = 1;
-        memo[1] = 1;
+        memo[n+1] = 0;
+        memo[n] = 1;
         
-        for(int i = 2 ; i <= n ; i++)
+        for(int i = n-1 ; i >= 0 ; i--)
         {
-            int onestep = memo[i-1];
-            int twostep = memo[i-2];
+            int onestep = memo[i+1];
+            int twostep = memo[i+2];
         
             int ans = onestep + twostep;
             memo [i] = ans;
         }
         
-        return memo[n];
+        return memo[0];
     }
 }
