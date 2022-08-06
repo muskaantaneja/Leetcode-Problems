@@ -7,25 +7,20 @@ class Solution {
         {
             if(current == 5)
                 five++;
-            else if(current == 10)
+            else if(current == 10 && five >= 1)
             {
                 ten++;
                 five--;
-                if(five<0)
-                    return false;
             }
-            else if(current==20)
+            else if(current==20 && (ten > 0 && five>0))
             {
-                if(ten > 0 && five>0)
-                {
-                    ten--;
-                    five--;
-                }
-                else if(five >= 3)
-                    five -= 3;
-                else
-                    return false;
+                 ten--;
+                five--;
             }
+            else if(current==20 && five >= 3)
+                five -= 3;
+            else
+                return false;
         }
         
         return true;
