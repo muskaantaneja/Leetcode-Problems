@@ -15,37 +15,31 @@
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        
+        while(root!=null)
+        {
+            stack.push(root);
+            root = root.left;
+        }
         
         List<Integer> ans = new ArrayList<>();
         
-        if(root==null)
-            return ans;
-        
-        Stack<TreeNode> stack = new Stack<>();
-        
-        stack.add(root);
-        HashSet<TreeNode> visited = new HashSet<>();
-        visited.add(root);
         while(stack.size() > 0){
-
-            TreeNode current = stack.peek();
-            if(current.right!=null && !visited.contains(current.right)){
-                stack.add(current.right);
-                visited.add(stack.peek());
-            }
-            else
-            {
-                ans.add(current.val);
-                current = stack.pop();
-                if(current.left!=null && !visited.contains(current.left))
-                {
-                    stack.add(current.left);
-                    visited.add(stack.peek());
-                }
-            }
+            TreeNode current = stack.pop();
+           // System.out.println(current.val);
+            ans.add(current.val);
+            if(current.right!=null)
+                stack.push(current.right);
             
+            current = current.right;
+            while(current!=null && current.left!=null)
+            {
+                stack.push(current.left);
+                current = current.left;
+            }
         }
-        Collections.reverse(ans);
+        
         return ans;
     }
 }
