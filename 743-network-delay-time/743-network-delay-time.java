@@ -33,7 +33,7 @@ class Solution {
             in.add(weight);
             list.add(in);
             
-            adj.set(src , list);
+            //adj.set(src , list);
         }
         int[] ans = dijkstra(n+1 ,adj,k );
         int maxi = 0;
