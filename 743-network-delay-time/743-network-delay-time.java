@@ -12,35 +12,52 @@ class Pair implements Comparable<Pair> {
     }
 }
 
+
 class Solution {
-    public int networkDelayTime(int[][] times, int V, int S) {
+    public int networkDelayTime(int[][] times, int n, int k) {
         ArrayList<ArrayList<ArrayList<Integer>>> adj = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> arr = new ArrayList<>();
         
-        S= S;
-        for(int i =0; i<=V ; i++)
+        for(int i = 0 ; i<=n ;i++ )
             adj.add(new ArrayList<>());
+        
         for(int[] i : times)
         {
-            ArrayList<ArrayList<Integer>> arr = adj.get(i[0]);
+            int src = i[0];
+            int dest = i[1];
+            int weight = i[2];
             
-            ArrayList <Integer> list = new ArrayList<>();
-            list.add(i[1]);
-            list.add(i[2]);
+            ArrayList<ArrayList<Integer>> list = adj.get(src);
+            ArrayList<Integer> in = new ArrayList<>();
+            in.add(dest);
+            in.add(weight);
+            list.add(in);
             
-            arr.add(list);
+            adj.set(src , list);
         }
-        
-        for(ArrayList<ArrayList<Integer>> o : adj)
-        System.out.println(o);
+        int[] ans = dijkstra(n+1 ,adj,k );
+        int maxi = 0;
+        for(int i = 1 ; i<= n ; i++)
+        {
+            if(ans[i] == -1)
+                    return -1;
+                else
+                    maxi = Math.max(ans[i] , maxi);
+            
+        }
+        return maxi;
+    }
+    public int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+    {
+        // Write your code here
         PriorityQueue <Pair> pq = new PriorityQueue<>();
-        int costs[] = new int[V+1];
-        
+        int costs[] = new int[V];
+        Arrays.fill(costs,-1);
+        costs[S] = 0;
         pq.add(new Pair(S,0));
         
         HashSet<Integer> visited = new HashSet<>();
         
-        int count = 0;
-        int max = 0;
         while(pq.size() > 0){
             Pair cn = pq.remove();
             
@@ -52,8 +69,6 @@ class Solution {
             
             visited.add(current);
             costs[current] = cc;
-            max = Math.max(max , cc);
-            count++;
             for(ArrayList<Integer> i : adj.get(current))
             {
                 if(!visited.contains(i.get(0)))
@@ -62,16 +77,9 @@ class Solution {
             
         }
         
-        // int count = 0;
-        // for(int i : costs)
-        // {
-        //     if(i == 0)
-        //         count++;
-        // }
-        
-        if(count == V)
-        return max;
-        
-        return -1;
+       return costs; 
     }
 }
+
+
+
