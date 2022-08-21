@@ -6,26 +6,16 @@ class Solution {
         for(int current=0 ; current<nums.length ; current++){
         
             int key = nums[current];
-            if(map.containsKey(key))
-            {
-                if(key + key == target)
-                {
-                    ans[0] = map.get(key);
-                    ans[1] = current;
-                    return ans;
-                }
+           
+            if(map.containsKey(target - key)){
+                ans[0] = current;
+                ans[1] = map.get(target - key);
+                return ans;
             }
             
             map.put(key , current);
         }
-        for(int current : map.keySet())
-        {
-            if(map.containsKey(target - current)){
-                ans[0] = map.get(current);
-                ans[1] = map.get(target - current);
-                return ans;
-            }
-        }
+        
         return ans;
         
     }
