@@ -28,7 +28,7 @@ class Solution {
             len++;
         }
         
-        if(ans.length() > 1 && ans.charAt(ans.length() - 1) != ans.charAt(ans.length()-2))
+        if(ans.length() > 1 && len == ans.length())
             str = str + count + "" + ans.charAt(ans.length()-1);
         
         //System.out.println("ans " + str);
