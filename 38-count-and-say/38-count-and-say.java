@@ -4,16 +4,16 @@ class Solution {
             return "1";
         if(n==2)
             return "11";
-        return makeString(3 ,n , "11");
+        return makeString(2 ,n , "11");
     }
     public String makeString(int current , int n , String ans)
     {
-        if(current-1 == n)
+        if(current == n)
             return ans;
         
-        int count = 0;
+        int count = 1;
         int len = 1;
-        count = 1;
+
         String str = "";
         
         while(len < ans.length())
@@ -30,8 +30,7 @@ class Solution {
         
         if(ans.length() > 1 && len == ans.length())
             str = str + count + "" + ans.charAt(ans.length()-1);
-        
-        //System.out.println("ans " + str);
+    
        return makeString(current + 1 , n , str);
         
     }
