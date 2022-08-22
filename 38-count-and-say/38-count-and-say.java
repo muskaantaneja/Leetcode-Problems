@@ -2,9 +2,9 @@ class Solution {
     public String countAndSay(int n) {
         if(n == 1)
             return "1";
-        if(n==2)
-            return "11";
-        return makeString(2 ,n , "11");
+        // if(n==2)
+        //     return "11";
+        return makeString(1 ,n , "1");
     }
     public String makeString(int current , int n , String ans)
     {
@@ -28,7 +28,7 @@ class Solution {
             len++;
         }
         
-        if(ans.length() > 1 && len == ans.length())
+        if( len == ans.length())
             str = str + count + "" + ans.charAt(ans.length()-1);
     
        return makeString(current + 1 , n , str);
