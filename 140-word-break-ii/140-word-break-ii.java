@@ -1,37 +1,29 @@
 class Solution {
-    public List<String> wordBreak(String s, List<String> dict) 
-    {
-        // code here
-        HashSet<String> set = new HashSet<>();
-        
-        for(String i : dict){
-            set.add(i);
-        }
+    public List<String> wordBreak(String s, List<String> wordDict) {
+      HashMap<String , Boolean> memo = new HashMap<>();
         List<String> ans = new ArrayList<>();
-        wordbreak( 0 , 1, s , set ,"" , ans);
-        
+         checkWords(s , 0 , 0 , wordDict,"" , ans);
         return ans;
     }
-    
-    static void wordbreak( int start , int end , String s, HashSet<String>set ,
-    String str , List<String> ans){
-        
-        if( end == s.length())
+    public void checkWords(String s , int start , int end , List<String> wordDict,String str,List<String> ans)
+    {
+        String key = s.substring(start,end+1);
+        if(end == s.length()-1)
         {
-            if(set.contains(s.substring(start , end) )){
-                str = str + s.charAt(end - 1);
+            if(wordDict.contains(key))
+            {
+                str = str + key;
                 ans.add(str);
             }
-            
             return;
         }
         
-        if(set.contains(s.substring(start , end))){
-            wordbreak( end , end+1, s , set ,str +  s.charAt(end-1) + " ", ans);
-        }
+       if(wordDict.contains(key))
+             checkWords(s , end + 1 , end + 1 , wordDict , str + key + " " , ans);
+         checkWords(s , start , end + 1 ,wordDict ,  str , ans);
         
-         wordbreak( start , end+1, s , set ,str+s.charAt(end-1) , ans);
-         
-         return;
+        //memo.put(checker , consider||notconsider);
+        
+        return ;
     }
 }
