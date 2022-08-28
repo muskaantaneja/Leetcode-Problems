@@ -1,28 +1,24 @@
 class Solution {
-    public void rotate(int[] nums, int k) {
-        HashSet<Integer> visited = new HashSet<>();
+     public static void reverse(int nums[], int i, int j){
+        int li = i;
+        int ri = j;
         
-        for(int i = 0 ; i<nums.length ; i++)
-        {
-            if(!visited.contains(i))
-                 rotateArray(nums , i ,nums[i], k , visited);
+        while(li < ri){
+            int temp = nums[li];
+            nums[li] = nums[ri];
+            nums[ri] = temp;
+            
+            li++;
+            ri--;
         }
-       
-        return ;
     }
-    public void rotateArray(int[] nums ,int current,int prev,int k ,HashSet<Integer> visited){
-        
-        if(visited.contains(current))
-        {
-            nums[current] = prev;
-            return;
+    public void rotate(int[] nums, int k) {
+        k = k % nums.length; 
+        if(k < 0){ 
+            k += nums.length;
         }
-        
-        int val = nums[current];
-        nums[current] = prev;
-        visited.add(current);
-        
-        rotateArray(nums, (current+k)%nums.length, val, k , visited);
-        return;
+        reverse(nums, 0, nums.length - k - 1);
+        reverse(nums, nums.length - k, nums.length - 1);
+        reverse(nums, 0, nums.length - 1);
     }
 }
